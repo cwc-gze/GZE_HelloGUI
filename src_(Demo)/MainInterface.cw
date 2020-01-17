@@ -1,18 +1,10 @@
 package  { 
 	
 	import GZ.Sys.Interface.Interface;
-//import GZ.Gfx.Clip;
-	
-	//import Demo.Screen.DemoRoll;
-
-	//import GZ.Gpu.ShaderModel.GzModel.GzShModel_Quad.GzShModel_Quad;
-	
-	
-	//import GZ.Base.Thread.Thread;
 	import GZ.Sys.ThreadItf;
 	
-	//import GZ.Base.Mat4x4;
-	//import GZ.Base.Perspective;
+	
+	import Demo.Scene;
 	
 	
 	public thread<ThreadItf> MainInterface extends Interface {
@@ -48,7 +40,8 @@ package  {
 			Debug.fPass(" ---- My First GZE Graphical Window ---- ");
 			Debug.fPass(" --------------------------------------- ");
 			
-			//oDemo = new DemoRoll(this);
+			//var _oScene : Scene = new Scene(this);
+			var _oScene : Scene = new Scene(this);
 		}
 		
 

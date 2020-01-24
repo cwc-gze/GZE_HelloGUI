@@ -1,7 +1,7 @@
 ;Register Cwc before using a .cwMake
 >
 ;First, set a Toolchain, (VLianceTool/LibRT) is the default one
--{_wToolchain}= VLianceTool/LibRT[Mingw]
+-{_wToolchain}= VLianceTool/LibRT
 >
 ;Compile C~ to C++, We specify the Entry Point file of a CWayv program to build, 
 ; we choose to output C++ object files to a array Files List (aCwObj) with the directive #Obj

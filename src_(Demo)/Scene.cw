@@ -1,18 +1,16 @@
-package  {
 
-	import GZ.Gfx.Clip.Img;
-	import GZ.File.RcImg;
-	import GZ.Gfx.Vector.VectorShape;
-	
-	
-	import GZ.Gfx.Root;
-	import GZ.Gfx.Clip;
-	import GZ.Gfx.Vector.Box;
+import GZ.Gfx.Clip.Img;
+import GZ.File.RcImg;
+import GZ.Gfx.Vector.VectorShape;
 
-	public class Scene extends Clip {
+import GZ.Gfx.Root;
+import GZ.Gfx.Clip;
+import GZ.Gfx.Vector.Box;
+
+public class Scene extends Clip {
 
 		
-		public var oObj : Box;
+	public var oObj : Box;
 
 		
 	public function Scene( _oParent : Root ):Void {
@@ -50,5 +48,5 @@ package  {
 		oObj.vRot.nRoll  = oObj.vRot.nRoll  + 0.008;
 	}
 		
-	}
 }
+

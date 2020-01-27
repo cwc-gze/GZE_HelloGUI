@@ -16,8 +16,8 @@ public class Scene extends Clip {
 	public function Scene( _oParent : Root ):Void {
 		Clip(_oParent, 0.0, 0.0);
 		
-		//!Nex Box Object:        X ,Y,   Width,Height, LineSize
-		oObj = new Box(this, 300,300,  200,200,    5);
+		//!Nex Box Object:X ,Y,   Width,Height, LineSize
+		oObj = new Box( 300,300,  200,200,    5);
 		
 		//Moving
 		//! ----- Pos -- In Screen Coordinate (0.0, 0.0, 0.0 = Top left)

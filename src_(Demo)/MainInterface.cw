@@ -18,12 +18,14 @@ public thread<ThreadItf> MainInterface extends Interface {
 		
 		//!Select rendering on GPU on CPU
 		bGpuDraw = false;
-		
+		Debug.fTrace("MainInterface");
 		//Extends Class Parameters
 		Interface(_oThreadItf, "Hello GZE GUI", 800, 600);
-
+		
+		Debug.fTrace("Interface");
 		//Create a new windows interface
 		fCreateInterface();
+		Debug.fTrace("fCreateInterface");
 	}
 	
 	/*

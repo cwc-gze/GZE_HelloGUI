@@ -11,7 +11,7 @@ public class MainEntry extends EntryPoint {
 
 	public function MainEntry():Int {
 
-		Debug.fTrace("Hello GZE!");
+		Debug.fTrace("Hello GZE!!");
 		
 		oThread = new MainInterface(); //Create our Class Interface
 		

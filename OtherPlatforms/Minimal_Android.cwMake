@@ -1,0 +1,45 @@
+;Register Cwc before using a .cwmake
+>
+-{_sOpt}="Debug"
+>
+-{_wToolchain}= VLianceTool/DroidRT
+>
+-c ../java/Android/Wrapper/ -o javaCppObj/ 
+>
+-o javaCppObj/  -#To _out/{_sPlatform}_{_sOpt}/App.* -llog -landroid -lEGL -lGLESv2
+>
+-#Copy _out/{_sPlatform}_{_sOpt}/App.so obj/build/apk/{pLib_ABI}libGZE.so
+>
+res -M "java/Rc/AndroidManifest.xml" -S "java/Rc/res" -J "../java/"
+>
+javac -cp ".;../java/;" "../java/R.java" "../java/MainActivity.java" -d obj/java/
+>
+dx --output=obj/build/apk/classes.dex obj/java/
+>
+apk -M "java/Rc/AndroidManifest.xml" -S "java/Rc/res" -F "obj/build/Test.unaligned.apk" "obj/build/apk"
+>
+zipalign "obj/build/Test.unaligned.apk" "obj/build/Test.aligned.apk"
+>
+keytool -genkeypair -dname "cn=MyName, ou=MyOrgUnit, o=MyOrg, c=US"
+    -alias Adroid_TestApp
+    -keystore java/MyKey.keystore
+	-keypass 123456
+    -storepass 123456 
+	-keyalg RSA -keysize 2048
+	-validity 180
+>
+apksigner --ks "java/MyKey.keystore" --ks-key-alias Adroid_TestApp --ks-pass pass:"123456" 
+		  --out "obj/build/Test.signed.apk" "obj/build/Test.aligned.apk" 
+>
+aapt list	   "obj/build/Test.signed.apk"
+>
+adb devices
+>
+adb install -r "obj/build/Test.signed.apk"
+>
+adb logcat -c
+>
+adb logcat * -v brief
+>
+adb shell am start -n gz.project/main.MainActivity
+>

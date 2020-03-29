@@ -37,9 +37,14 @@ adb devices
 >
 adb install -r "obj/build/Test.signed.apk"
 >
-adb logcat -c
->
-adb logcat * -v brief
+;adb logcat -c
 >
 adb shell am start -n gz.project/main.MainActivity
 >
+;adb shell pidof -s gz.project
+>
+;-{nPID}=[adb shell pidof -s gz.project]
+>
+adb logcat --pid=[adb shell pidof -s gz.project]
+>
+

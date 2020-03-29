@@ -1,10 +1,3 @@
-/*
- * Engine.h
- *
- *  Created on: Nov 30, 2013
- *      Author: Nishry
- */
-
 #ifndef _ENGINE
 #define _ENGINE
 
@@ -24,4 +17,4 @@
 
 #include "Application.h"
 
-#endif /* ENGINE_H_ */
+#endif

@@ -1,36 +1,29 @@
-
 #ifndef RENDERERES2_H_
 #define RENDERERES2_H_
 
-
 #include <EGL/egl.h>
-
 
 class RendererES2
 {
 
-
-
 public:
-	enum ContextState
-	{
+	enum ContextState{
 		Initialised = 0,
 		Invalid,
 		Restored,
-
 		RenderStateCount
 	};
 
 	RendererES2();
-	~RendererES2();
 
 	ContextState OnContextCreated();
-	void SetViewport( int iWidth, int iHeight );
+	void SetViewport(int _nWidth, int _nHeight);
 
-	void ClearScreen( float fRed, float fGreen, float fBlue, float fAlpha = 0.0f, bool bClearDepth = true );
+	void ClearScreen(float _nRed, float _nGreen, float _nBlue, float _nAlpha = 0.0, bool _bClearDepth = true);
+	~RendererES2();
 
 private:
 	EGLContext m_EglContext;
 };
 
-#endif /* RENDERERES2_H_ */
+#endif

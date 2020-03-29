@@ -1,5 +1,3 @@
-
-
 #include <time.h>
 #include <assert.h>
 
@@ -14,18 +12,12 @@
 
 #define LOG_TAG "GZE"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
-
-
 
 
 Application* Application::s_pApplication = 0;
 
-Application::Application( int iWidth, int iHeight)
-{
-
-
+Application::Application( int iWidth, int iHeight){
 
 	s_pApplication = this;
 
@@ -47,14 +39,9 @@ Application::Application( int iWidth, int iHeight)
 
     oExample =  new Demo_Demo();
 */
-
-
-	//_oExample->fNewFrame
-
 }
 
-Application::~Application()
-{
+Application::~Application(){
 	s_pApplication = 0;
 
 	if ( m_pRenderer )
@@ -63,73 +50,59 @@ Application::~Application()
 	}
 }
 
-Application& Application::Get()
-{
+Application& Application::Get(){
 	assert( s_pApplication && "Application not created!" );
 	return *s_pApplication;
 }
 
-void Application::OnContextCreated()
-{
-	if ( m_pRenderer->OnContextCreated() == RendererES2::Restored )
-	{
-		// The surface was re-created which means all
-		// of the OpenGL resources were deleted.
-		// You will need to recreate your resources here
-		// This means textures, buffers, shader programs, etc...
-		  // oExample =  new Example_Example();
-		LOGV( "Recreate");
-
-		 //  new Example_Example(); //Recreate only texture/shader TODO
-/*
+void Application::OnContextCreated(){
+	if ( m_pRenderer->OnContextCreated() == RendererES2::Restored ){
+		// The surface was re-created (like when unpausing) which means all OGL resources are deleted.
+		// We need to recreate resources (textures, buffers, shader programs, etc)
+		LOGV("Context [re]created");
+		/*
 		oExample->oInterface->oWindow->oGpu->fWinIni();
 		oExample->oInterface->oGpuObj->fCreate( );
 
 		oExample->oInterface->oImg->oRc->fGpuLoad();
-*/
-
-			LOGV( "RecreateFinish");
+		*/
 	}
 
 	m_bPaused = false;
-	LOGV( "UNPAUSE");
+	LOGV("Unpause");
 }
 
-void Application::OnWindowResize( int iWidth, int iHeight )
-{
+void Application::OnWindowResize(int iWidth, int iHeight){
 	static int _nLastWidth = 0;
 	static int _nLastHeight = 0;
 	if(iWidth != _nLastWidth && iHeight != _nLastHeight){
 		_nLastWidth = iWidth;
 		_nLastHeight = iHeight;
-		LOGV( "Resize : Width: %i, Height:, %i.", iWidth, iHeight );
+		LOGV("Resize : Width: %i, Height:, %i.", iWidth, iHeight);
 //		GZ_System::_fForceResolution(iWidth, iHeight);
 		m_pRenderer->SetViewport( iWidth, iHeight );
 	}
 }
 
-void Application::Step()
-{
-	// Get an accurate delta time
+void Application::Step(){
+	//Accurate delta time
 	timespec timeNow;
-	clock_gettime( CLOCK_MONOTONIC, &timeNow );
+	clock_gettime(CLOCK_MONOTONIC, &timeNow);
 	uint64_t uNowNano = timeNow.tv_sec * 1000000000ull + timeNow.tv_nsec;
 
-	float fDeltaSeconds = float( uNowNano - m_Time ) * 0.000000001f; // 1 second = 1,000,000,000 nanoseconds
+	float fDeltaSeconds = float(uNowNano - m_Time) * 0.000000001; // 1 sec = 1,000,000,000 nanosec
 	m_Time = uNowNano;
 
-	if ( !m_bPaused )
-	{
-		// Update
+	if ( !m_bPaused ){
 		OnUpdate( fDeltaSeconds );
 	}
 }
 
-void Application::OnUpdate( const float fDeltaSeconds )
-{
-	m_pRenderer->ClearScreen( 1.0f, 0.0f, 1.0f, 0.0f, true );
+void Application::OnUpdate( const float fDeltaSeconds ){
+
+	m_pRenderer->ClearScreen(0.0, 1.0, 0.0, 0.0, true);
+	// Here is the game logic
 	/*
-	// Do game logic here
 	GZ_Global::fMainUpdate();
 	oExample->oInterface->fNewFrame();
 	*/
@@ -137,19 +110,15 @@ void Application::OnUpdate( const float fDeltaSeconds )
 
 
 
-void Application::OnPause()
-{
-	LOGV( "PAUSEEEEEEEE");
+void Application::OnPause(){
+	LOGV("OnPause");
 	m_bPaused = true;
-
 }
 
-void Application::OnResume()
-{
-
+void Application::OnResume(){
+	LOGV("OnResume");
 }
 
-void Application::OnTouch( int iPointerID, float fPosX, float fPosY, int iAction )
-{
-	// Input! Let's do something...
+void Application::OnTouch( int iPointerID, float fPosX, float fPosY, int iAction ){
+	LOGV("Touch: %i, x: %f y:, %f action:, %i.", iPointerID, fPosX, fPosY, iAction );
 }

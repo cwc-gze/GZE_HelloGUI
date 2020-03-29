@@ -4,47 +4,55 @@
 >
 -{_wToolchain}= VLianceTool/DroidRT
 >
--c ../java/Android/Wrapper/ -o javaCppObj/ 
+-{sPckName}= gz.project
+-{sMainActivity}= main.MainActivity
+-{pJava}= ../java/
+-{pObj}= obj/java/
+-{pBinOut}= _out/{_sPlatform}_{_sOpt}/
+-{sApkName}= App.apk
 >
--o javaCppObj/  -#To _out/{_sPlatform}_{_sOpt}/App.* -llog -landroid -lEGL -lGLESv2
+-{sKeyFile}= MyKey.keystore
+-{sKeyAlias}= Adroid_TestApp
+-{sKeyPass}= 123456
 >
--#Copy _out/{_sPlatform}_{_sOpt}/App.so obj/build/apk/{pLib_ABI}libGZE.so
+-c {pJava}Android/Wrapper/ -o {pObj}CppObj/ 
 >
-res -M "java/Rc/AndroidManifest.xml" -S "java/Rc/res" -J "../java/"
+-o {pObj}CppObj/  -#To _out/{_sPlatform}_{_sOpt}/App.* -llog -landroid -lEGL -lGLESv2
 >
-javac -cp ".;../java/;" "../java/R.java" "../java/MainActivity.java" -d obj/java/
+-#Copy {pBinOut}App.so {pObj}build/apk/{pLib_ABI}libGZE.so
 >
-dx --output=obj/build/apk/classes.dex obj/java/
+res -M "{pJava}Rc/AndroidManifest.xml" -S "{pJava}Rc/res" -J "{pJava}"
 >
-apk -M "java/Rc/AndroidManifest.xml" -S "java/Rc/res" -F "obj/build/Test.unaligned.apk" "obj/build/apk"
+javac -cp ".;{pJava};" "{pJava}R.java" "{pJava}MainActivity.java" -d {pObj}class/
 >
-zipalign "obj/build/Test.unaligned.apk" "obj/build/Test.aligned.apk"
+dx --output={pObj}build/apk/classes.dex {pObj}class/
+>
+apk -M "{pJava}Rc/AndroidManifest.xml" -S "{pJava}Rc/res" -F "{pObj}build/Bin.unaligned.apk" "{pObj}build/apk"
+>
+zipalign "{pObj}build/Bin.unaligned.apk" "{pObj}build/Bin.aligned.apk"
 >
 keytool -genkeypair -dname "cn=MyName, ou=MyOrgUnit, o=MyOrg, c=US"
-    -alias Adroid_TestApp
-    -keystore java/MyKey.keystore
-	-keypass 123456
-    -storepass 123456 
+    -alias {sKeyAlias}
+    -keystore {pJava}{sKeyFile}
+	-keypass   {sKeyPass}
+    -storepass {sKeyPass} 
 	-keyalg RSA -keysize 2048
 	-validity 180
 >
-apksigner --ks "java/MyKey.keystore" --ks-key-alias Adroid_TestApp --ks-pass pass:"123456" 
-		  --out "obj/build/Test.signed.apk" "obj/build/Test.aligned.apk" 
+apksigner --ks "{pJava}{sKeyFile}" --ks-key-alias {sKeyAlias} --ks-pass pass:"{sKeyPass}" 
+		  --out "{pBinOut}{sApkName}" "{pObj}build/Bin.aligned.apk" 
 >
-aapt list	   "obj/build/Test.signed.apk"
+aapt list	    "{pBinOut}{sApkName}"
 >
 adb devices
 >
-adb install -r "obj/build/Test.signed.apk"
+adb install -r  "{pBinOut}{pApkName}"
 >
-;adb logcat -c
+adb shell am start -n {sPckName}/{sMainActivity}
 >
-adb shell am start -n gz.project/main.MainActivity
+;(Ask 2 time, to be sure getting PID)
+adb shell pidof -s {sPckName}
 >
-;adb shell pidof -s gz.project
->
-;-{nPID}=[adb shell pidof -s gz.project]
->
-adb logcat --pid=[adb shell pidof -s gz.project]
+adb logcat --pid=[adb shell pidof -s {sPckName}]
 >
 

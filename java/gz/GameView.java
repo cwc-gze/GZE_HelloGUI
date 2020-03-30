@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 package gz;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -7,57 +9,43 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
-public class GameView extends GLSurfaceView 
-{
+public class GameView extends GLSurfaceView {
+	
 	public long nativePtr = 0;
 	public Renderer oRender;
-	
-	
-	private static class Renderer implements GLSurfaceView.Renderer 
-    {
+
+	private static class Renderer implements GLSurfaceView.Renderer  {
 
 		public GameView oEngine;
-		
-	  public Renderer( GameView _oEngine ) 
-	    {
+
+		public Renderer( GameView _oEngine ) {
 		  oEngine = _oEngine;
-	    }
-		
-	
-        public void onDrawFrame( GL10 gl ) 
-        {
+		}
+
+        public void onDrawFrame( GL10 gl )  {
         	GzCpp.OnFrame(oEngine.nativePtr);
         }
 
         boolean bFirst = false;
-        public void onSurfaceChanged( GL10 gl, int iWidth, int iHeight ) 
-        {	
-        	
+        public void onSurfaceChanged( GL10 gl, int _nWidth, int _nHeight ) {	
         	if(oEngine.nativePtr == 0){
-        		oEngine.nativePtr = GzCpp.OnInit( iWidth,  iHeight);
+        		oEngine.nativePtr = GzCpp.OnInit( _nWidth,  _nHeight);
         	}else{
-        		GzCpp.OnResize(oEngine.nativePtr, iWidth, iHeight );
+        		GzCpp.OnResize(oEngine.nativePtr, _nWidth, _nHeight );
         	}
         }
 
-        public void onSurfaceCreated( GL10 gl, EGLConfig config ) 
-        {
+        public void onSurfaceCreated( GL10 gl, EGLConfig config ) {
           	if(oEngine.nativePtr != 0){
           		GzCpp.OnRecreate(oEngine.nativePtr);
           	}
         }
     }
 	
-	
-	
-    public GameView( Context context ) 
-    {
-   
-    	
+    public GameView( Context context ) {
         super( context );
-        
-        // Pick an EGLConfig with RGBA8 color, 16-bit depth, no stencil,
-        // supporting OpenGL ES 2.0 or later backwards-compatible versions.
+        //EGLConfig with RGBA8 color, 16-bit depth, no stencil,
+        //(OpenGL ES 2.0 or later backwards-compatible versions)
         setEGLConfigChooser( 8, 8, 8, 8, 16, 0 );
         setEGLContextClientVersion( 2 );
         oRender = new Renderer(this);
@@ -66,42 +54,32 @@ public class GameView extends GLSurfaceView
         setRenderMode( RENDERMODE_CONTINUOUSLY); //Auto
     }
     
-    public void onDestroy()
-    {	
-    	// Send the event to the renderer thread
-    	queueEvent( new Runnable() 
-    	{
+    public void onDestroy(){	
+    	//Send the event to the renderer thread
+    	queueEvent( new Runnable() {
             @Override
-            public void run() 
-            {
+            public void run() {
             	GzCpp.OnShutdown(nativePtr);
             }
         });
     }
 
-    public void onResume()
-    {
+    public void onResume(){
     	super.onResume();
-    	
-    	// Send the event to the renderer thread
-    	queueEvent( new Runnable() 
-    	{
+    	//Send the event to the renderer thread
+    	queueEvent( new Runnable() {
             @Override
-            public void run() 
-            {
+            public void run() {
             	GzCpp.OnResume(nativePtr);
             }
         });
     }
     
-    public void onPause()
-    {
-    	// Send the event to the renderer thread
-    	queueEvent( new Runnable() 
-    	{
+    public void onPause(){
+    	//Send the event to the renderer thread
+    	queueEvent( new Runnable() {
             @Override
-            public void run() 
-            {
+            public void run()  {
             	GzCpp.OnPause(nativePtr);
             }
         });
@@ -110,9 +88,8 @@ public class GameView extends GLSurfaceView
     }
     
     @Override
-    public boolean onTouchEvent( MotionEvent event ) 
-    {
-    	// Implement Runnable for MotionEvent parameter
+    public boolean onTouchEvent( MotionEvent event ) {
+    	//Implement Runnable for MotionEvent parameter
     	class MotionEventRunnable implements Runnable
     	{
     		private MotionEvent mEvent;
@@ -121,29 +98,27 @@ public class GameView extends GLSurfaceView
 			@Override
 			public void run() 
 			{
-				// Get the number of pointers to iterate
-				int iNumPointers = mEvent.getPointerCount();
-		    	for ( int i = 0; i < iNumPointers; ++i )
-		    	{
-		    		// Get the pointer ID and index
-		    		int iPointerID = mEvent.getPointerId( i );
-		    		int iPointerIndex = mEvent.findPointerIndex( iPointerID );
+				//Get the number of pointers to iterate
+				int _nNumPointers = mEvent.getPointerCount();
+		    	for ( int i = 0; i < _nNumPointers; ++i ){
+		    		//Get the pointer ID and index
+		    		int _nPointerID = mEvent.getPointerId( i );
+		    		int _nPointerIndex = mEvent.findPointerIndex( _nPointerID );
 		    		
-		    		// Get the xy position and action
-		    		float x = mEvent.getX( iPointerIndex );
-		            float y = mEvent.getY( iPointerIndex );
+		    		//Get the xy position and action
+		    		float x = mEvent.getX( _nPointerIndex );
+		            float y = mEvent.getY( _nPointerIndex );
 		            
-		            int iAction = mEvent.getActionMasked();
+		            int _nAction = mEvent.getActionMasked();
 		            
-		            // Send to C++
-		            GzCpp.OnTouch(nativePtr, iPointerID, x, y, iAction );
+		            //Send to C++
+		            GzCpp.OnTouch(nativePtr, _nPointerID, x, y, _nAction );
 		    	}				
 			}
     	}
     	
-    	// Send the event to the renderer thread
+    	//Send the event to the renderer thread
     	queueEvent( new MotionEventRunnable( event ) );
-    	
     	return true;
     }
 }

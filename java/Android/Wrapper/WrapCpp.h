@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 #ifndef _ENGINE
 #define _ENGINE
 

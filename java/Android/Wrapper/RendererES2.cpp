@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 #include "RendererES2.h"
 #include <GLES3/gl3.h>
 

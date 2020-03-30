@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 #include "WrapCpp.h"
 
 extern "C" {
@@ -41,9 +43,9 @@ JNIEXPORT void JNICALL Java_gz_GzCpp_OnFrame( JNIEnv* env, jobject obj, jlong  _
 }
 
 
-JNIEXPORT void JNICALL Java_gz_GzCpp_OnTouch( JNIEnv* env, jobject obj, jlong  _oThis, int _nPointerID, float _nPosX, float _nPosY, int iAction ){
+JNIEXPORT void JNICALL Java_gz_GzCpp_OnTouch( JNIEnv* env, jobject obj, jlong  _oThis, int _nPointerID, float _nPosX, float _nPosY, int _nAction ){
 	if (_oThis ){
-		((Application *)_oThis)->OnTouch( _nPointerID, _nPosX, _nPosY, iAction );
+		((Application *)_oThis)->OnTouch( _nPointerID, _nPosX, _nPosY, _nAction );
 	}
 }
 

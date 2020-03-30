@@ -6,10 +6,11 @@
 >
 -{sPckName}= gz.project
 -{sMainActivity}= main.MainActivity
+-{sApkName}= App.apk
+>
 -{pJava}= ../java/
 -{pObj}= obj/java/
 -{pBinOut}= _out/{_sPlatform}_{_sOpt}/
--{sApkName}= App.apk
 >
 -{sKeyFile}= MyKey.keystore
 -{sKeyAlias}= Adroid_TestApp

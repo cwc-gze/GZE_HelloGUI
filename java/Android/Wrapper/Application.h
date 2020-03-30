@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
@@ -8,7 +10,7 @@ class Application
 {
 
 public:
-	Application( int iWidth, int iHeight);
+	Application( int _nWidth, int _nHeight);
 	static Application& Get();
 
 	void Step();
@@ -18,8 +20,8 @@ public:
 	void OnUpdate( const float fDeltaSeconds );
 	void OnDraw();
 	void OnContextCreated();
-	void OnWindowResize( int iWidth, int iHeight );
-	void OnTouch( int iPointerID, float fPosX, float fPosY, int iAction );
+	void OnWindowResize( int _nWidth, int _nHeight );
+	void OnTouch( int _nPointerID, float _nPosX, float _nPosY, int _nAction );
 	
 //	Demo_Demo* oExample;
 	virtual ~Application();

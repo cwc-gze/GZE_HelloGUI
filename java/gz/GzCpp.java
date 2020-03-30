@@ -1,9 +1,9 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 package gz;
 
-public class GzCpp 
-{
-    static 
-    {
+public class GzCpp {
+    static {
         System.loadLibrary( "GZE" );
     }
 

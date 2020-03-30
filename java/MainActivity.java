@@ -1,15 +1,14 @@
-package main;
+//This file is a part of GZE: https://github.com/VLiance/GZE
 
+package main;
 
 import gz.GzActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class MainActivity extends GzActivity
-{
+public class MainActivity extends GzActivity{
 
-    @Override protected void onCreate( Bundle savedInstanceState ) 
-    {
+    @Override protected void onCreate( Bundle savedInstanceState ) {
     	 super.onCreate( savedInstanceState );
     	 
     	//Method #1 GZE is interfaced with "extends GzActivity" of the current Activity
@@ -18,13 +17,10 @@ public class MainActivity extends GzActivity
     	 //CreateGzActivityInParallel();
     }
     
-    
-    public void CreateGzActivityInParallel()
-    {
+    public void CreateGzActivityInParallel(){
     	Intent i = new Intent(MainActivity.this, GzActivity.class);
     	startActivity(i);
     }
-    
 }
 
 

@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 package gz;
 
 import gz.GameView;
@@ -9,23 +11,16 @@ import android.widget.Toast;
 
 public class GzActivity extends Activity {
 
-	
     GameView mView;
     
-	/** Called when the activity is first created. */
+	/** Called when the activity created */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	
 
         mView = new GameView( getApplication() );
         setContentView( mView );
-	    
 	}
-	
-	
-
-    
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -33,45 +28,35 @@ public class GzActivity extends Activity {
 	//super.onActivityResult(requestCode, resultCode, data);
 	  //  if (resultCode == RESULT_CANCELED){
 	  //      Toast.makeText(getApplicationContext(), "too bad..", Toast.LENGTH_LONG).show();
-	      //  finish();
-	 //   }
+	  //  finish();
+	  //}
 	}
-    
 
-    @Override protected void onPause() 
-    {
+    @Override protected void onPause() {
         super.onPause();
         if(mView != null){
         mView.onPause();
         }
     }
 
-    @Override protected void onResume() 
-    {
+    @Override protected void onResume() {
         super.onResume();
         if(mView != null){
         mView.onResume();
         }
     }
     
-    @Override protected void onDestroy() 
-    {
+    @Override protected void onDestroy() {
         super.onDestroy();
         if(mView != null){
         mView.onDestroy();
         }
     }
     
-
-
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) 
-    {
-        if(keyCode == KeyEvent.KEYCODE_MENU)  //Home button
-        {
-       
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_MENU){  //Home button
         	Toast toast = Toast.makeText(this, "Home Button", Toast.LENGTH_LONG);
             toast.show();
-            
             return true;
         }
         
@@ -80,8 +65,6 @@ public class GzActivity extends Activity {
             toast.show();
             return true;
         }
-        
-        
         
         // let the system handle all other key events
         return super.onKeyDown(keyCode, event);
@@ -109,23 +92,12 @@ public class GzActivity extends Activity {
     };
     */
     
-    
     @Override public void onBackPressed() {
      // TODO Auto-generated method stub
     	Toast toast = Toast.makeText(this, "Back Button", Toast.LENGTH_LONG);
         toast.show();
-    	
-    	
     	super.onBackPressed();
         finish();
-    	
-
-    
-
     }
 	
-	
-	
-	
-
 }

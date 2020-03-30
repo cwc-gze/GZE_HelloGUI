@@ -1,3 +1,5 @@
+//This file is a part of GZE: https://github.com/VLiance/GZE
+
 #include <time.h>
 #include <assert.h>
 
@@ -17,7 +19,7 @@
 
 Application* Application::s_pApplication = 0;
 
-Application::Application( int iWidth, int iHeight){
+Application::Application( int _nWidth, int _nHeight){
 
 	s_pApplication = this;
 
@@ -32,7 +34,7 @@ Application::Application( int iWidth, int iHeight){
 	// Create the renderer
 /*
 	GZ_System::_fIni();
-	GZ_System::_fForceResolution(iWidth, iHeight);
+	GZ_System::_fForceResolution(_nWidth, _nHeight);
     GZ_Global::_fSetDirRcFiles(gzLStr(L"../../../../_Src/_Rc/"));
     GZ_Global::_fSetDirRcEmbed(gzLStr(L"../../../../_Src/_RcToEmbed/"));
     GZ_Global::_fIni();
@@ -44,8 +46,7 @@ Application::Application( int iWidth, int iHeight){
 Application::~Application(){
 	s_pApplication = 0;
 
-	if ( m_pRenderer )
-	{
+	if ( m_pRenderer ){
 		delete m_pRenderer;
 	}
 }
@@ -72,15 +73,15 @@ void Application::OnContextCreated(){
 	LOGV("Unpause");
 }
 
-void Application::OnWindowResize(int iWidth, int iHeight){
+void Application::OnWindowResize(int _nWidth, int _nHeight){
 	static int _nLastWidth = 0;
 	static int _nLastHeight = 0;
-	if(iWidth != _nLastWidth && iHeight != _nLastHeight){
-		_nLastWidth = iWidth;
-		_nLastHeight = iHeight;
-		LOGV("Resize : Width: %i, Height:, %i.", iWidth, iHeight);
+	if(_nWidth != _nLastWidth && _nHeight != _nLastHeight){
+		_nLastWidth = _nWidth;
+		_nLastHeight = _nHeight;
+		LOGV("Resize : Width: %i, Height:, %i.", _nWidth, _nHeight);
 //		GZ_System::_fForceResolution(iWidth, iHeight);
-		m_pRenderer->SetViewport( iWidth, iHeight );
+		m_pRenderer->SetViewport( _nWidth, _nHeight );
 	}
 }
 
@@ -90,15 +91,15 @@ void Application::Step(){
 	clock_gettime(CLOCK_MONOTONIC, &timeNow);
 	uint64_t uNowNano = timeNow.tv_sec * 1000000000ull + timeNow.tv_nsec;
 
-	float fDeltaSeconds = float(uNowNano - m_Time) * 0.000000001; // 1 sec = 1,000,000,000 nanosec
+	float _nDeltaSeconds = float(uNowNano - m_Time) * 0.000000001; // 1 sec = 1,000,000,000 nanosec
 	m_Time = uNowNano;
 
 	if ( !m_bPaused ){
-		OnUpdate( fDeltaSeconds );
+		OnUpdate( _nDeltaSeconds );
 	}
 }
 
-void Application::OnUpdate( const float fDeltaSeconds ){
+void Application::OnUpdate( const float _nDeltaSeconds ){
 
 	m_pRenderer->ClearScreen(0.0, 1.0, 0.0, 0.0, true);
 	// Here is the game logic
@@ -119,6 +120,6 @@ void Application::OnResume(){
 	LOGV("OnResume");
 }
 
-void Application::OnTouch( int iPointerID, float fPosX, float fPosY, int iAction ){
-	LOGV("Touch: %i, x: %f y:, %f action:, %i.", iPointerID, fPosX, fPosY, iAction );
+void Application::OnTouch( int _nPointerID, float _nPosX, float _nPosY, int _nAction ){
+	LOGV("Touch: %i, x: %f y:, %f action:, %i.", _nPointerID, _nPosX, _nPosY, _nAction );
 }

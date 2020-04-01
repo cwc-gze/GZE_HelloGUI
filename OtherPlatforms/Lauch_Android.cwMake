@@ -1,0 +1,37 @@
+;Register Cwc before using a .cwmake
+>
+-{_sOpt}="Debug"
+>
+-{_wToolchain}= VLianceTool/DroidRT
+>
+-{sPckName}= gz.project
+-{sMainActivity}= main.MainActivity
+-{sApkName}= App.apk
+>
+-{pJava}= ../java/
+-{pObj}= obj/java/
+-{pBinOut}= _out/{_sPlatform}_{_sOpt}/
+>
+-{sKeyFile}= MyKey.keystore
+-{sKeyAlias}= Adroid_TestApp
+-{sKeyPass}= 123456
+>
+aapt list	    "{pBinOut}{sApkName}"
+>
+adb devices
+>
+adb install -r  "{pBinOut}{sApkName}"
+>
+adb logcat -b crash --clear
+>
+adb shell am start -n {sPckName}/{sMainActivity}
+>
+;(Ask 2 time, to be sure getting PID)
+adb shell pidof -s {sPckName}
+>
+;beginning of crash
+adb logcat --pid=[adb shell pidof -s {sPckName}] -#CloseWhen beginning of crash
+>
+;process, tag, raw, time
+ndk-stack -sym {pObj}build/apk/{pLib_ABI} [<< adb logcat -b crash -v time]
+>

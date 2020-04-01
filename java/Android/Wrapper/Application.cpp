@@ -12,10 +12,16 @@
 */
 #include <android/log.h>
 
+#include "Lib_GZ/GZ_inc.h"
+
 #define LOG_TAG "GZE"
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
 
+
+
+//extern "C" Lib_GZ::uLib* IniLib_Lib_GzAndroid(); //Overplace must be present
+extern "C" int Android_Main();
 
 Application* Application::s_pApplication = 0;
 
@@ -32,6 +38,12 @@ Application::Application( int _nWidth, int _nHeight){
 	m_pRenderer = new RendererES2();
 
 	// Create the renderer
+		LOGV("Printf");
+		printf("\n BBBBBB");
+	LOGV("Call Main");
+	Android_Main();
+
+	LOGV("----");
 /*
 	GZ_System::_fIni();
 	GZ_System::_fForceResolution(_nWidth, _nHeight);
@@ -43,13 +55,7 @@ Application::Application( int _nWidth, int _nHeight){
 */
 }
 
-Application::~Application(){
-	s_pApplication = 0;
 
-	if ( m_pRenderer ){
-		delete m_pRenderer;
-	}
-}
 
 Application& Application::Get(){
 	assert( s_pApplication && "Application not created!" );
@@ -60,7 +66,7 @@ void Application::OnContextCreated(){
 	if ( m_pRenderer->OnContextCreated() == RendererES2::Restored ){
 		// The surface was re-created (like when unpausing) which means all OGL resources are deleted.
 		// We need to recreate resources (textures, buffers, shader programs, etc)
-		LOGV("Context [re]created");
+		LOGV("Context [qqre]created");
 		/*
 		oExample->oInterface->oWindow->oGpu->fWinIni();
 		oExample->oInterface->oGpuObj->fCreate( );
@@ -70,7 +76,8 @@ void Application::OnContextCreated(){
 	}
 
 	m_bPaused = false;
-	LOGV("Unpause");
+	LOGV("Unpause2");
+	//	Android_Main();
 }
 
 void Application::OnWindowResize(int _nWidth, int _nHeight){
@@ -122,4 +129,12 @@ void Application::OnResume(){
 
 void Application::OnTouch( int _nPointerID, float _nPosX, float _nPosY, int _nAction ){
 	LOGV("Touch: %i, x: %f y:, %f action:, %i.", _nPointerID, _nPosX, _nPosY, _nAction );
+}
+
+Application::~Application(){
+	s_pApplication = 0;
+
+	if ( m_pRenderer ){
+		delete m_pRenderer;
+	}
 }

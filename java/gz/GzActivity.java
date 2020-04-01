@@ -3,11 +3,13 @@
 package gz;
 
 import gz.GameView;
+import gz.TopExceptionHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Toast;
+import java.io.IOException;
 
 public class GzActivity extends Activity {
 
@@ -17,10 +19,20 @@ public class GzActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-
-        mView = new GameView( getApplication() );
-        setContentView( mView );
+		Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
+		
+		TopExceptionHandler.LOGGER.severe("AAAAAAAAAAAAAAAAAA");
+		
+		//try {
+			mView = new GameView( getApplication() );
+			setContentView( mView );
+			/*
+		}catch (NullPointerException e){
+			e.printStackTrace();
+			 throw new RuntimeException("AAAAAAAAAAA");
+		} */
 	}
+	
     
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

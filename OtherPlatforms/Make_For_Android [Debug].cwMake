@@ -10,7 +10,7 @@
 -{sMainActivity}= main.MainActivity
 -{sApkName}= App.apk
 >
--{pJava}= ../java/
+-{pJava}= {_pLib_GZE}src/SubLib_System/Lib_GzAndroid/java/
 -{pObj}= obj/java/
 -{pBinOut}= _out/{_sPlatform}_{_sOpt}/
 >
@@ -18,7 +18,7 @@
 -{sKeyAlias}= Adroid_TestApp
 -{sKeyPass}= 123456
 >
--c {pJava}Android/Wrapper/ -o obj/cpp_{_sPlatform}_{_sOpt}/javaWrapper/ -I obj/cw/
+-c {pJava}CppWrapper/ -o obj/cpp_{_sPlatform}_{_sOpt}/javaWrapper/ -I obj/cw/
 >
 -o obj/cpp_{_sPlatform}_{_sOpt}/  -#To _out/{_sPlatform}_{_sOpt}/App.* -llog -landroid -lEGL -lGLESv2
 >

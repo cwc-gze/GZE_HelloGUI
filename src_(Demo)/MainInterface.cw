@@ -28,7 +28,7 @@ public thread<ThreadItf> MainInterface extends Interface {
 		//!New thread started, this and subclass are isolated for thread safety
 		
 		//!Select rendering on GPU on CPU
-		bGpuDraw = false;
+		//bGpuDraw = false;
 		Debug.fTrace("MainInterface");
 		//Extends Class Parameters
 		Interface(_oThreadItf, "Hello GZE GUI", 800, 600, false, 0x11FF0011);

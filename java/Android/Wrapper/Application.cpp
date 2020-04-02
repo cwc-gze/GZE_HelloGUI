@@ -22,6 +22,7 @@
 
 //extern "C" Lib_GZ::uLib* IniLib_Lib_GzAndroid(); //Overplace must be present
 extern "C" int Android_Main();
+extern "C" int Android_Update();
 
 Application* Application::s_pApplication = 0;
 
@@ -38,10 +39,9 @@ Application::Application( int _nWidth, int _nHeight){
 	m_pRenderer = new RendererES2();
 
 	// Create the renderer
-		LOGV("Printf");
-		printf("\n BBBBBB");
+
 	LOGV("Call Main");
-	Android_Main();
+	//Android_Main();
 
 	LOGV("----");
 /*
@@ -53,6 +53,9 @@ Application::Application( int _nWidth, int _nHeight){
 
     oExample =  new Demo_Demo();
 */
+
+	Android_Main();
+
 }
 
 
@@ -77,7 +80,7 @@ void Application::OnContextCreated(){
 
 	m_bPaused = false;
 	LOGV("Unpause2");
-	//	Android_Main();
+
 }
 
 void Application::OnWindowResize(int _nWidth, int _nHeight){
@@ -89,7 +92,9 @@ void Application::OnWindowResize(int _nWidth, int _nHeight){
 		LOGV("Resize : Width: %i, Height:, %i.", _nWidth, _nHeight);
 //		GZ_System::_fForceResolution(iWidth, iHeight);
 		m_pRenderer->SetViewport( _nWidth, _nHeight );
+			
 	}
+
 }
 
 void Application::Step(){
@@ -108,7 +113,9 @@ void Application::Step(){
 
 void Application::OnUpdate( const float _nDeltaSeconds ){
 
-	m_pRenderer->ClearScreen(0.0, 1.0, 0.0, 0.0, true);
+//	m_pRenderer->ClearScreen(0.0, 1.0, 0.0, 0.0, true);
+	
+	Android_Update();
 	// Here is the game logic
 	/*
 	GZ_Global::fMainUpdate();
